@@ -5,21 +5,35 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Лабораторна робота №5-6 — Левківська Анастасія, група ІА-401</title>
 <style>
-body{font:16px Arial,sans-serif;margin:30px}
-a{margin-right:16px;font-size:18px}
-#box{margin-top:16px;padding:16px;min-height:80px;background:#ffeb3b}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;font:16px "Trebuchet MS",Verdana,sans-serif;background:linear-gradient(135deg,#fff6c9,#ffd9a8)}
+.card{width:min(440px,90vw);padding:28px;background:#fff;border-radius:18px;box-shadow:0 10px 30px #0003}
+h1{margin:0 0 20px;font-size:24px;text-align:center}
+nav{display:flex;gap:10px;justify-content:center;margin-bottom:20px}
+a{padding:9px 24px;border-radius:99px;background:#eee;color:#333;font-weight:bold;text-decoration:none;transition:.2s}
+a:hover{background:#ffe14d}
+a.on{background:#333;color:#fff}
+#box{display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start;min-height:140px;padding:18px;border-radius:14px;background:#ffeb3b}
+#box:empty::before{content:"Оберіть список вище";color:#8a6d00}
+#box span{padding:6px 14px;border-radius:99px;background:#fff;box-shadow:0 2px 4px #0002;animation:in .3s both}
+@keyframes in{from{opacity:0;transform:translateY(8px)}}
 </style>
 </head>
 <body>
-<h1>Лабораторна робота №5-6</h1>
-<a href="#" onclick="load('1.txt'); return false">мови</a>
-<a href="#" onclick="load('2.txt'); return false">студенти</a>
-<div id="box"></div>
+<div class="card">
+  <h1>Лабораторна робота №5-6</h1>
+  <nav>
+    <a href="#" onclick="load('1.txt', this); return false">мови</a>
+    <a href="#" onclick="load('2.txt', this); return false">студенти</a>
+  </nav>
+  <div id="box"></div>
+</div>
 <script>
-function load(file) {
+function load(file, link) {
+  document.querySelectorAll('a').forEach(a => a.classList.toggle('on', a == link));
   fetch(file)
     .then(r => r.json())
-    .then(list => box.innerHTML = '<ul>' + list.map(x => '<li>' + x + '</li>').join('') + '</ul>')
+    .then(list => box.innerHTML = list.map((x, i) => `<span style="animation-delay:${i * 60}ms">${x}</span>`).join(''))
     .catch(() => box.textContent = 'Не вдалося завантажити файл');
 }
 </script>
