@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Лабораторна робота №5-6 — Левківська Анастасія, група ІА-401</title>
+<style>
+body{font:16px Arial,sans-serif;margin:30px}
+button{padding:10px 20px;font:inherit;cursor:pointer}
+#weather{margin-top:16px;padding:16px;min-height:80px;background:#e3f2fd;line-height:1.8}
+</style>
+</head>
+<body>
+<h1>Погода в Лондоні</h1>
+<button id="btn">Показати погоду</button>
+<div id="weather"></div>
+<script>
+const key = 'ВАШ_КЛЮЧ';
+const city = 'London';
+
+btn.onclick = () => {
+  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${key}`)
+    .then(r => {
+      if (!r.ok) throw new Error();
+      return r.json();
+    })
+    .then(d => weather.innerHTML =
+      `Температура: ${d.main.temp} °C<br>` +
+      `Вологість: ${d.main.humidity} %<br>` +
+      `Швидкість вітру: ${d.wind.speed} м/с`)
+    .catch(() => weather.textContent = 'Не вдалося отримати погоду. Перевірте ключ API та інтернет.');
+};
+</script>
+</body>
+</html>

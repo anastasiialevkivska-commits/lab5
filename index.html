@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Лабораторна робота №5-6 — Левківська Анастасія, група ІА-401</title>
+<style>
+body{font:16px Arial,sans-serif;margin:30px}
+a{margin-right:16px;font-size:18px}
+#box{margin-top:16px;padding:16px;min-height:80px;background:#ffeb3b}
+</style>
+</head>
+<body>
+<h1>Лабораторна робота №5-6</h1>
+<a href="#" onclick="load('1.txt'); return false">мови</a>
+<a href="#" onclick="load('2.txt'); return false">студенти</a>
+<div id="box"></div>
+<script>
+function load(file) {
+  fetch(file)
+    .then(r => r.json())
+    .then(list => box.innerHTML = '<ul>' + list.map(x => '<li>' + x + '</li>').join('') + '</ul>')
+    .catch(() => box.textContent = 'Не вдалося завантажити файл');
+}
+</script>
+</body>
+</html>
